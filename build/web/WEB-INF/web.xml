@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>CatalogController</servlet-name>
+        <servlet-class>CatalogController.CatalogController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderController</servlet-name>
+        <servlet-class>CatalogController.OrderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CatalogController</servlet-name>
+        <url-pattern>/Catalog/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderController</servlet-name>
+        <url-pattern>/OrderController</url-pattern>
+    </servlet-mapping>
+ 
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+     <security-role>
+        <description>customer service employees</description>
+        <role-name>service</role-name>
+    </security-role>
+    <security-role>
+        <description>programmers</description>
+        <role-name>programmer</role-name>
+    </security-role>
+
+    <security-constraint>
+        <!-- Restrict access to the URLs in the admin directory -->
+        <web-resource-collection>
+            <web-resource-name>Admin</web-resource-name>
+            <url-pattern>/admin.jsp</url-pattern>
+        </web-resource-collection>
+
+        <!-- Authorize the service and programmer roles -->
+        <auth-constraint>
+            <role-name>service</role-name>
+            <role-name>programmer</role-name>
+        </auth-constraint>
+        
+        <!-- Forces a secure connection - remove comments to enable -->
+        <!--
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+        -->        
+    </security-constraint>
+
+    <!-- Use form-based authentication to provide access -->
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/index.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    
+</web-app>
